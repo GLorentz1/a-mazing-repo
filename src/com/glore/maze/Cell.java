@@ -33,6 +33,10 @@ public class Cell {
         return walls;
     }
 
+    public Boolean hasWall(Wall wall) {
+        return this.walls.get(wall.ordinal());
+    }
+
     public void setVisited(Boolean visited) {
         this.visited = visited;
     }
