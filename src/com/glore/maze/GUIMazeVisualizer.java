@@ -7,7 +7,7 @@ import com.glore.maze.Cell.Wall;
 import java.awt.*;
 
 public class GUIMazeVisualizer extends JFrame implements MazeVisualizer{
-    private static Integer cellSize = 50;
+    private static Integer cellSize = 25;
 
     @Override
     public void visualize(Grid grid) {
