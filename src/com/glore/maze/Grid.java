@@ -31,6 +31,26 @@ public class Grid {
         return this.cells.get(index);
     }
 
+    public List<Cell> neighborsFor(Cell cell) {
+        List<Cell> neighbors = new ArrayList<>();
+        if(!cell.isBottomRow(dimension)) {
+            neighbors.add(cellAt(cell.row()+1, cell.column()));
+        } 
+
+        if(!cell.isRightmostColumn(dimension)) {
+            neighbors.add(cellAt(cell.row(), cell.column()+1)); 
+        } 
+
+        if(!cell.isLeftmostColumn()) {
+            neighbors.add(cellAt(cell.row(), cell.column()-1)); 
+        }
+        
+        if(!cell.isTopRow()) {
+            neighbors.add(cellAt(cell.row()-1, cell.column())); 
+        }
+        return neighbors;
+    }
+
     public void removeWallAt(Integer row, Integer column, Wall wall) {
         Cell cell = cellAt(row, column);
 

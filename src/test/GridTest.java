@@ -4,8 +4,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.List;
+
 import org.junit.Test;
 
+import com.glore.maze.Cell;
 import com.glore.maze.Grid;
 import com.glore.maze.Cell.Wall;
 
@@ -51,5 +54,16 @@ public class GridTest {
         assertTrue(grid.cellAt(0,0).hasWall(Wall.LEFT));
         assertTrue(grid.cellAt(2,2).hasWall(Wall.RIGHT));
         assertTrue(grid.cellAt(2,2).hasWall(Wall.BOTTOM));
+    }
+
+    @Test
+    public void returnsNeighbors() {
+        Grid grid = new Grid(3);
+
+        List<Cell> neighbors = grid.neighborsFor(grid.cellAt(1, 0));
+
+        assertTrue(neighbors.contains(grid.cellAt(0, 0)));
+        assertTrue(neighbors.contains(grid.cellAt(1, 1)));
+        assertTrue(neighbors.contains(grid.cellAt(2, 0)));
     }
 }
