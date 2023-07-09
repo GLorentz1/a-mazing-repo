@@ -23,7 +23,13 @@ public class GUIMazeVisualizer extends JFrame implements MazeVisualizer{
                 super.paintComponent(g);
 
                 int offsetX = cellSize;
-                int offsetY = cellSize;
+                int offsetY = cellSize/2;
+
+                g.setColor(Color.LIGHT_GRAY);
+                g.fillRect(offsetX, offsetY, cellSize, cellSize);
+
+                g.setColor(Color.cyan);
+                g.fillRect(offsetX+(grid.dimension()-1)*cellSize, offsetY+(grid.dimension()-1)*cellSize, cellSize, cellSize);
 
                 g.setColor(Color.BLACK);
 
