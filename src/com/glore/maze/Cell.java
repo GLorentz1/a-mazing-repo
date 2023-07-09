@@ -45,6 +45,22 @@ public class Cell {
         walls.set(wall.ordinal(), false);
     }
 
+    public Boolean isTopRow() {
+        return row == 0;
+    }
+
+    public Boolean isLeftmostColumn() {
+        return column == 0;
+    }
+
+    public Boolean isBottomRow(Integer dimension) {
+        return row == dimension-1;
+    }
+
+    public Boolean isRightmostColumn(Integer dimension) {
+        return column == dimension-1;
+    }
+
     public enum Wall {
         LEFT,
         TOP,

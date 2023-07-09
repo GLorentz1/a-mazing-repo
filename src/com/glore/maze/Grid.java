@@ -3,6 +3,8 @@ package com.glore.maze;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.glore.maze.Cell.Wall;
+
 public class Grid {
     private Integer dimension; 
     private List<Cell> cells;
@@ -27,5 +29,35 @@ public class Grid {
     public Cell cellAt(Integer row, Integer column) {
         Integer index = this.dimension * row + column;
         return this.cells.get(index);
+    }
+
+    public void removeWallAt(Integer row, Integer column, Wall wall) {
+        Cell cell = cellAt(row, column);
+
+        if(wall.equals(Wall.BOTTOM)) {
+            if(!cell.isBottomRow(dimension())) {
+                cell.breakWall(Wall.BOTTOM);
+                Cell neighborCell = cellAt(row+1, column);
+                neighborCell.breakWall(Wall.TOP);
+            }
+        } else if(wall.equals(Wall.LEFT)) {
+            if(!cell.isLeftmostColumn()) {
+                cell.breakWall(Wall.LEFT);
+                Cell neighborCell = cellAt(row, column-1);
+                neighborCell.breakWall(Wall.RIGHT);
+            }
+        } else if(wall.equals(Wall.RIGHT)) {
+            if(!cell.isRightmostColumn(dimension())) {
+                cell.breakWall(Wall.RIGHT);
+                Cell neighborCell = cellAt(row, column+1);
+                neighborCell.breakWall(Wall.LEFT);
+            }
+        } else if(wall.equals(Wall.TOP)) {
+            if(!cell.isTopRow()) {
+                cell.breakWall(Wall.TOP);
+                Cell neighborCell = cellAt(row-1, column);
+                neighborCell.breakWall(Wall.BOTTOM);
+            }
+        }
     }
 }
