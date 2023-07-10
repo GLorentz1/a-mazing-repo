@@ -13,17 +13,20 @@ public class GUIMazeVisualizer extends JFrame implements MazeVisualizer{
     public void visualize(Grid grid) {
         setTitle("Grid GUI");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        Integer size = 2*cellSize + cellSize*grid.dimension();
-        setSize(size, size);
         setLocationRelativeTo(null);
 
         JPanel gridPanel = new JPanel() {
+            @Override
+            public Dimension getPreferredSize() {
+                return new Dimension(2*cellSize + cellSize*grid.dimension(), 2*cellSize + cellSize*grid.dimension());
+            }
+
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
 
                 int offsetX = cellSize;
-                int offsetY = cellSize/2;
+                int offsetY = cellSize;
 
                 g.setColor(Color.LIGHT_GRAY);
                 g.fillRect(offsetX, offsetY, cellSize, cellSize);
@@ -59,7 +62,8 @@ public class GUIMazeVisualizer extends JFrame implements MazeVisualizer{
                 }
             }
         };
-        add(gridPanel);
+        setContentPane(gridPanel);
+        pack();
         setVisible(true);
     }
 }
