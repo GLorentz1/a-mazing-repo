@@ -59,6 +59,10 @@ public class GridTest {
     @Test
     public void returnsNeighbors() {
         Grid grid = new Grid(3);
+        
+        grid.removeWallAt(1,0,Wall.TOP);
+        grid.removeWallAt(1,0,Wall.RIGHT);
+        grid.removeWallAt(1,0,Wall.BOTTOM);
 
         List<Cell> neighbors = grid.neighborsFor(grid.cellAt(1, 0));
 
