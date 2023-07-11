@@ -5,17 +5,15 @@ import javax.swing.*;
 import com.glore.maze.Cell.Wall;
 
 import java.awt.*;
+import java.util.List;
 
 public class GUIMazeVisualizer extends JFrame implements MazeVisualizer{
-    private static Integer cellSize = 25;
+    private static Integer cellSize = 20;
+    private JPanel gridPanel;
+    private List<Cell> solution;
 
-    @Override
-    public void visualize(Grid grid) {
-        setTitle("Grid GUI");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-
-        JPanel gridPanel = new JPanel() {
+    public GUIMazeVisualizer(Grid grid) {
+        gridPanel = new JPanel() {
             @Override
             public Dimension getPreferredSize() {
                 return new Dimension(2*cellSize + cellSize*grid.dimension(), 2*cellSize + cellSize*grid.dimension());
@@ -25,23 +23,41 @@ public class GUIMazeVisualizer extends JFrame implements MazeVisualizer{
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
 
-                int offsetX = cellSize;
-                int offsetY = cellSize;
+                paintSolution(g);
+                paintInitialCell(g);
+                paintGoalCell(g);
 
+                paintGrid(g);
+            }
+
+            private void paintSolution(Graphics g) {
+                g.setColor(Color.MAGENTA);
+
+                for (Cell cell : solution) {
+                    int x = (cellSize + cell.column() * cellSize) + cellSize/4;
+                    int y = (cellSize + cell.row() * cellSize) + cellSize/4;
+                    g.fillRect(x, y, cellSize/2, cellSize/2);
+                }
+            }
+
+            private void paintInitialCell(Graphics g) {
                 g.setColor(Color.LIGHT_GRAY);
-                g.fillRect(offsetX, offsetY, cellSize, cellSize);
+                g.fillRect(cellSize, cellSize, cellSize, cellSize);
+            }
 
+            private void paintGoalCell(Graphics g) {
                 g.setColor(Color.cyan);
-                g.fillRect(offsetX+(grid.dimension()-1)*cellSize, offsetY+(grid.dimension()-1)*cellSize, cellSize, cellSize);
+                g.fillRect(cellSize+(grid.dimension()-1)*cellSize, cellSize+(grid.dimension()-1)*cellSize, cellSize, cellSize);
+            }
 
+            private void paintGrid(Graphics g) {
                 g.setColor(Color.BLACK);
-
                 for (int i = 0; i < grid.dimension(); i++) {
                     for (int j = 0; j < grid.dimension(); j++) {
                         Cell cell = grid.cellAt(i, j);
 
-                        int x = offsetX + j * cellSize;
-                        int y = offsetY + i * cellSize;
+                        int x = cellSize + j * cellSize;
+                        int y = cellSize + i * cellSize;
 
                         if (cell.hasWall(Wall.LEFT)) {
                             g.drawLine(x, y, x, y + cellSize);
@@ -62,8 +78,22 @@ public class GUIMazeVisualizer extends JFrame implements MazeVisualizer{
                 }
             }
         };
+    }
+
+
+    @Override
+    public void visualize() {
+        setTitle("Grid GUI");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
         setContentPane(gridPanel);
         pack();
         setVisible(true);
+    }
+
+    @Override
+    public void visualizeSolution(List<Cell> path) {
+        solution = path;
+        gridPanel.repaint();
     }
 }

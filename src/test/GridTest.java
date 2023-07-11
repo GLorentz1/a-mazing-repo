@@ -64,7 +64,7 @@ public class GridTest {
         grid.removeWallAt(1,0,Wall.RIGHT);
         grid.removeWallAt(1,0,Wall.BOTTOM);
 
-        List<Cell> neighbors = grid.neighborsFor(grid.cellAt(1, 0));
+        List<Cell> neighbors = grid.reachableNeighbors(grid.cellAt(1, 0));
 
         assertTrue(neighbors.contains(grid.cellAt(0, 0)));
         assertTrue(neighbors.contains(grid.cellAt(1, 1)));

@@ -31,7 +31,31 @@ public class Grid {
         return this.cells.get(index);
     }
 
-    public List<Cell> neighborsFor(Cell cell) {
+    public Boolean isGoalCell(Cell cell) {
+        return cell.row() == dimension-1 && cell.column() == dimension-1;
+    }
+
+    public List<Cell> reachableNeighbors(Cell cell) {
+        List<Cell> neighbors = new ArrayList<>();
+        if(!cell.isBottomRow(dimension) && !cell.hasWall(Wall.BOTTOM)) {
+            neighbors.add(cellAt(cell.row()+1, cell.column()));
+        } 
+
+        if(!cell.isRightmostColumn(dimension) && !cell.hasWall(Wall.RIGHT)) {
+            neighbors.add(cellAt(cell.row(), cell.column()+1)); 
+        } 
+
+        if(!cell.isLeftmostColumn() && !cell.hasWall(Wall.LEFT)) {
+            neighbors.add(cellAt(cell.row(), cell.column()-1)); 
+        }
+        
+        if(!cell.isTopRow() && !cell.hasWall(Wall.TOP)) {
+            neighbors.add(cellAt(cell.row()-1, cell.column())); 
+        }
+        return neighbors;
+    }
+
+    public List<Cell> positionalNeighbors(Cell cell) {
         List<Cell> neighbors = new ArrayList<>();
         if(!cell.isBottomRow(dimension)) {
             neighbors.add(cellAt(cell.row()+1, cell.column()));
@@ -50,6 +74,7 @@ public class Grid {
         }
         return neighbors;
     }
+
 
     public void removeWallAt(Integer row, Integer column, Wall wall) {
         Cell cell = cellAt(row, column);

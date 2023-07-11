@@ -21,7 +21,7 @@ public class BacktrackingMazeGenerator implements MazeGenerator {
                 stack.push(cell);
             }
             
-            List<Cell> unvisitedNeighbors = maze.neighborsFor(cell).stream().filter(c -> c.visited() == false).collect(Collectors.toList());
+            List<Cell> unvisitedNeighbors = maze.positionalNeighbors(cell).stream().filter(c -> c.visited() == false).collect(Collectors.toList());
             if(unvisitedNeighbors.isEmpty()) {
                 cell = stack.pop();
             } else {
@@ -31,6 +31,10 @@ public class BacktrackingMazeGenerator implements MazeGenerator {
                 cell = chosenNeighbor;
             }
         } while (!stack.isEmpty());
+
+        for(Cell c : maze.cells()) {
+            c.setVisited(false);
+        }
 
         return maze;
     }
