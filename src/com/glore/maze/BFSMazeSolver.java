@@ -37,7 +37,7 @@ public class BFSMazeSolver implements MazeSolver {
 
         } while (!stack.isEmpty() && !grid.isGoalCell(cell));
 
-        return buildPath(successors, grid.cellAt(grid.dimension()-1, grid.dimension()-1));
+        return buildPath(successors, grid.cellAt(grid.goalY(), grid.goalX()));
     }
 
     private List<Cell> buildPath(Map<Cell, Cell> sucessorsMap, Cell goalCell) {

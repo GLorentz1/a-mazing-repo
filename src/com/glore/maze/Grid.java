@@ -2,16 +2,21 @@ package com.glore.maze;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import com.glore.maze.Cell.Wall;
 
 public class Grid {
     private Integer dimension; 
     private List<Cell> cells;
+    private Integer goalX;
+    private Integer goalY;
 
     public Grid(Integer dimension) {
         this.dimension = dimension;
         this.cells = new ArrayList<>();
+        this.goalX = new Random().nextInt(dimension);
+        this.goalY = new Random().nextInt(dimension);
 
         for(Integer i = 0; i < dimension * dimension; i++) {
             this.cells.add(new Cell( (int) i / dimension, i % dimension));
@@ -26,14 +31,23 @@ public class Grid {
         return this.dimension;
     }
 
+    public Integer goalX() {
+        return goalX;
+    }
+
+    public Integer goalY() {
+        return goalY;
+    }
+    
     public Cell cellAt(Integer row, Integer column) {
         Integer index = this.dimension * row + column;
         return this.cells.get(index);
     }
 
     public Boolean isGoalCell(Cell cell) {
-        return cell.row() == dimension-1 && cell.column() == dimension-1;
+        return cell.row() == goalY && cell.column() == goalX;
     }
+
 
     public List<Cell> reachableNeighbors(Cell cell) {
         List<Cell> neighbors = new ArrayList<>();
