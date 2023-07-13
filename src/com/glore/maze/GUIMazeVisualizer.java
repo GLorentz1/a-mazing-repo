@@ -26,17 +26,33 @@ public class GUIMazeVisualizer extends JFrame implements MazeVisualizer{
                 paintSolution(g);
                 paintInitialCell(g);
                 paintGoalCell(g);
-
+                paintVisited(g, grid);
                 paintGrid(g);
             }
 
             private void paintSolution(Graphics g) {
                 g.setColor(Color.MAGENTA);
 
-                for (Cell cell : solution) {
-                    int x = (cellSize + cell.column() * cellSize);
-                    int y = (cellSize + cell.row() * cellSize);
-                    g.fillRect(x, y, cellSize, cellSize);
+                if(solution != null && !solution.isEmpty()) {
+                    for (Cell cell : solution) {
+                        int x = (cellSize + cell.column() * cellSize);
+                        int y = (cellSize + cell.row() * cellSize);
+                        g.fillRect(x, y, cellSize, cellSize);
+                    }
+                }
+            }
+
+            private void paintVisited(Graphics g, Grid grid) {
+                if (solution == null || solution.isEmpty()) {
+                    g.setColor(Color.ORANGE);
+                    
+                    for(Cell cell : grid.cells()) {
+                        if(cell.visited()) {
+                            int x = (cellSize + cell.column() * cellSize);
+                            int y = (cellSize + cell.row() * cellSize);
+                            g.fillRect(x, y, cellSize, cellSize);
+                        }
+                    }
                 }
             }
 
