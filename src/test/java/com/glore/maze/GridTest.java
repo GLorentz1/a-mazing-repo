@@ -1,4 +1,4 @@
-package test;
+package com.glore.maze;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -8,8 +8,6 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.glore.maze.Cell;
-import com.glore.maze.Grid;
 import com.glore.maze.Cell.Wall;
 
 public class GridTest {

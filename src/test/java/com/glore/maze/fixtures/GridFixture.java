@@ -1,4 +1,4 @@
-package test.fixtures;
+package com.glore.maze.fixtures;
 
 import com.glore.maze.Grid;
 import com.glore.maze.Cell.Wall;
