@@ -52,6 +52,7 @@ public class BFSMazeSolver implements MazeSolver {
     }
 
     private List<Cell> buildPath(Map<Cell, Cell> sucessorsMap, Cell goalCell) {
+        solution.add(0, goalCell);
         Cell successor = successors.get(goalCell);
         while(successor != null) {
             solution.add(0, successor);

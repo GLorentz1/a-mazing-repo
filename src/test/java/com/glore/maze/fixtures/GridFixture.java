@@ -14,6 +14,8 @@ public class GridFixture {
         grid.removeWallAt(1,2,Wall.BOTTOM);
         grid.removeWallAt(2,1,Wall.RIGHT);
         grid.removeWallAt(2,0,Wall.RIGHT);
+        grid.setGoalX(2);
+        grid.setGoalY(1);
         return grid;
     }
 }

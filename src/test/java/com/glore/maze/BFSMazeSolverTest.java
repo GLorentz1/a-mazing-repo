@@ -15,7 +15,7 @@ public class BFSMazeSolverTest {
         List<Cell> solutionCells = solver.solve(grid);
 
         for(Cell c : solutionCells) {
-            System.out.println(c.column().toString() + c.row().toString());
+            System.out.println("x:"+ c.column().toString() + " y:" + c.row().toString());
         }
 
         assertTrue(solutionCells.get(solutionCells.size()-1).row() == grid.goalY() && solutionCells.get(solutionCells.size()-1).column() == grid.goalX());

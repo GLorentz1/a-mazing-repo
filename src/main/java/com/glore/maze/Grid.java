@@ -35,8 +35,20 @@ public class Grid {
         return goalX;
     }
 
+    public void setGoalX(Integer goalX) {
+        if(goalX < this.dimension) {
+            this.goalX = goalX;
+        }
+    }
+
     public Integer goalY() {
         return goalY;
+    }
+
+    public void setGoalY(Integer goalY) {
+        if(goalY < this.dimension) {
+            this.goalY = goalY;
+        }
     }
     
     public Cell cellAt(Integer row, Integer column) {
