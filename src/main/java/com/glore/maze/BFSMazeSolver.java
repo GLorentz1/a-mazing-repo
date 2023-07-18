@@ -36,19 +36,23 @@ public class BFSMazeSolver implements MazeSolver {
                 stack.push(unvisitedNeighbor);
                 successors.put(unvisitedNeighbor, cell);
 
-                if (this.visualizer != null) {
-                    visualizer.visualize();
-                    try {
-                        Thread.sleep(10);
-                    } catch (InterruptedException e) {
-                        System.out.println("Failure on thread sleep");
-                    }
-                }
+                visualizeVisited();
             }
 
         } while (!stack.isEmpty() && !grid.isGoalCell(cell));
 
         return buildPath(successors, grid.cellAt(grid.goalY(), grid.goalX()));
+    }
+
+    private void visualizeVisited() {
+        if (this.visualizer != null) {
+            visualizer.visualize();
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                System.out.println("Failure on thread sleep");
+            }
+        }
     }
 
     private List<Cell> buildPath(Map<Cell, Cell> sucessorsMap, Cell goalCell) {
