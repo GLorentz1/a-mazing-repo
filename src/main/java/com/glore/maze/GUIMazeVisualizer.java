@@ -8,11 +8,14 @@ import java.awt.*;
 import java.util.List;
 
 public class GUIMazeVisualizer extends JFrame implements MazeVisualizer{
-    private static Integer cellSize = 20;
+    private static Integer cellSize = 30;
     private JPanel gridPanel;
     private List<Cell> solution;
+    private PlayerMovementController movementController;
 
-    public GUIMazeVisualizer(Grid grid) {
+    public GUIMazeVisualizer(Grid grid, PlayerMovementController movementController) {
+        this.movementController = movementController;
+
         gridPanel = new JPanel() {
             @Override
             public Dimension getPreferredSize() {
@@ -28,6 +31,7 @@ public class GUIMazeVisualizer extends JFrame implements MazeVisualizer{
                 paintGoalCell(g);
                 paintVisited(g, grid);
                 paintGrid(g);
+                paintPlayer(g, movementController);
             }
 
             private void paintSolution(Graphics g) {
@@ -59,6 +63,14 @@ public class GUIMazeVisualizer extends JFrame implements MazeVisualizer{
             private void paintInitialCell(Graphics g) {
                 g.setColor(Color.LIGHT_GRAY);
                 g.fillRect(cellSize, cellSize, cellSize, cellSize);
+            }
+
+            private void paintPlayer(Graphics g, PlayerMovementController controller) {
+                Player player = controller.player();
+                Integer X = (cellSize + player.getPlayerX() * cellSize) + cellSize/2;
+                Integer Y = (cellSize + player.getPlayerY() * cellSize) + cellSize/2;
+                g.setColor(Color.red);
+                g.fillRect(X, Y, cellSize/4, cellSize/4);
             }
 
             private void paintGoalCell(Graphics g) {
@@ -99,12 +111,18 @@ public class GUIMazeVisualizer extends JFrame implements MazeVisualizer{
 
     @Override
     public void visualize() {
-        setTitle("Grid GUI");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-        setContentPane(gridPanel);
-        pack();
-        setVisible(true);
+        SwingUtilities.invokeLater(() -> {
+            setTitle("Grid GUI");
+            setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            setLocationRelativeTo(null);
+            setContentPane(gridPanel);
+            addKeyListener(movementController);
+            pack();
+            setVisible(true);
+            setFocusable(true);
+            requestFocusInWindow();
+        });
+
     }
 
     @Override

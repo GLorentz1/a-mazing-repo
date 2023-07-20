@@ -1,19 +1,22 @@
 package com.glore.maze;
 
-import java.util.List;
-
 public class MazeMain {
     public static void main(String[] args) {
-        BacktrackingMazeGenerator generator = new BacktrackingMazeGenerator();
+        Integer size = 30;
+
+        BacktrackingMazeGenerator generator = new BacktrackingMazeGenerator();        
+        Grid grid = generator.generate(size);
+        PlayerMovementController controller = new PlayerMovementController(new Player(), grid);
+        GUIMazeVisualizer visualizer = new GUIMazeVisualizer(grid, controller);
+        FloodMazeSolver solver = new FloodMazeSolver(visualizer);
+        MazeManager manager = 
+                            new MazeManager.Builder()
+                                .withController(controller)
+                                .withGenerator(generator, size)
+                                .withVisualizer(visualizer)
+                                .withSolver(solver)
+                                .build();
         
-        Grid grid = generator.generate(20);
-
-        GUIMazeVisualizer visualizer = new GUIMazeVisualizer(grid);
-        BFSMazeSolver solver = new BFSMazeSolver(visualizer);
-
-        List<Cell> solution = solver.solve(grid);
-
-        visualizer.visualize();
-        visualizer.visualizeSolution(solution);
+        manager.manage();
     }
 }

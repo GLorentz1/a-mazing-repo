@@ -41,10 +41,10 @@ public class FloodMazeSolver implements MazeSolver {
                             newPath.push(neighbor);
                             newPaths.add(newPath);
                         }
-
-                        visualizeVisited();
                     }                 
                 }
+
+                visualizeVisited();
 
                 List<Stack<Cell>> prunedNewPaths = new ArrayList<Stack<Cell>>();
                 for (Stack<Cell> newPath : newPaths) {
