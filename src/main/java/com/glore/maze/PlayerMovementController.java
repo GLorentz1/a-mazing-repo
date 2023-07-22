@@ -10,8 +10,12 @@ public class PlayerMovementController  implements KeyListener {
 
     private boolean hasMoved = false;
 
-    public PlayerMovementController(Player player, Grid grid) {
+    public PlayerMovementController(Player player) {
         this.player = player;
+        this.grid = null;
+    }
+
+    public void setGrid(Grid grid) {
         this.grid = grid;
     }
 

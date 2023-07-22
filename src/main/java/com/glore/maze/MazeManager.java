@@ -13,14 +13,13 @@ public class MazeManager {
 
     private List<Cell> solution;
 
-
     public MazeManager(Builder builder) {
         this.controller = builder.controller;
-        this.visualizer = builder.visualizer;
         this.generator = builder.generator;
         this.solver = builder.solver;
         this.size = builder.size;
         this.grid = builder.generator.generate(size);
+        this.visualizer = new GUIMazeVisualizer(this.grid, controller);
         this.player = builder.controller.player();
     }
 
@@ -60,16 +59,37 @@ public class MazeManager {
     }
 
     public void manage() {
+
         getSolution();
+        controller.setGrid(grid);
+
+        resetVisitedCells();
 
         while (true) {
             try {
+                
                 Thread.sleep(64);
                 visualizer.visualize();
+
+                visualizeSolutionIfReachedGoal();
+            
                 controller.reset();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    private void visualizeSolutionIfReachedGoal() {
+        Cell currentCell = grid.cellAt(player.getPlayerY(), player.getPlayerX());
+        if(grid.isGoalCell(currentCell)) {
+            visualizer.visualizeSolution(solution);
+        }
+    }
+
+    private void resetVisitedCells() {
+        for(Cell cell : grid.cells()) {
+            cell.setVisited(false);
         }
     }
     

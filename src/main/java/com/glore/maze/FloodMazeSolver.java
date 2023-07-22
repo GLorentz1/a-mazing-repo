@@ -1,19 +1,15 @@
 package com.glore.maze;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.Stack;
 import java.util.stream.Collectors;
 
 public class FloodMazeSolver implements MazeSolver {
     private List<Stack<Cell>> paths;
-    private MazeVisualizer visualizer;
 
-    public FloodMazeSolver(MazeVisualizer visualizer) {
+    public FloodMazeSolver() {
         this.paths = new ArrayList<Stack<Cell>>();
-        this.visualizer = visualizer;
     }
 
     @Override
@@ -27,7 +23,6 @@ public class FloodMazeSolver implements MazeSolver {
                 paths.add(newPath);
             } else {
                 List<Stack<Cell>> newPaths = new ArrayList<Stack<Cell>>();
-                Set<Cell> topCells = new HashSet<>();
 
                 for (Stack<Cell> path : paths) {
                     Cell topCell = path.peek();
@@ -44,33 +39,10 @@ public class FloodMazeSolver implements MazeSolver {
                     }                 
                 }
 
-                visualizeVisited();
-
-                List<Stack<Cell>> prunedNewPaths = new ArrayList<Stack<Cell>>();
-                for (Stack<Cell> newPath : newPaths) {
-                    Cell topCellFromNewPath = newPath.peek();
-
-                    if (!topCells.contains(topCellFromNewPath)) {
-                        prunedNewPaths.add(newPath);
-                        topCells.add(topCellFromNewPath);
-                    }
-                }
-                paths = prunedNewPaths;
+                paths = newPaths;
             }
         } while (grid.cellAt(grid.goalY(), grid.goalX()).visited() == false);
 
         return paths.stream().filter(p -> p.peek().equals(grid.cellAt(grid.goalY(), grid.goalX()))).toList().get(0);
     }
-
-    private void visualizeVisited() {
-        if (this.visualizer != null) {
-            visualizer.visualize();
-            try {
-                Thread.sleep(5);
-            } catch (InterruptedException e) {
-                System.out.println("Failure on thread sleep");
-            }
-        }
-    }
-
 }

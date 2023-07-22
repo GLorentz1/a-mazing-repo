@@ -11,13 +11,11 @@ public class BFSMazeSolver implements MazeSolver {
     private List<Cell> solution;
     private Stack<Cell> stack;
     private Map<Cell,Cell> successors;
-    private MazeVisualizer visualizer;
 
-    public BFSMazeSolver(MazeVisualizer visualizer) {
+    public BFSMazeSolver() {
         this.stack = new Stack<Cell>();
         this.solution = new ArrayList<Cell>();
         this.successors = new HashMap<>();
-        this.visualizer = visualizer;
     }
 
     @Override
@@ -35,24 +33,11 @@ public class BFSMazeSolver implements MazeSolver {
                 unvisitedNeighbor.setVisited(true);
                 stack.push(unvisitedNeighbor);
                 successors.put(unvisitedNeighbor, cell);
-
-                visualizeVisited();
             }
 
         } while (!stack.isEmpty() && !grid.isGoalCell(cell));
 
         return buildPath(successors, grid.cellAt(grid.goalY(), grid.goalX()));
-    }
-
-    private void visualizeVisited() {
-        if (this.visualizer != null) {
-            visualizer.visualize();
-            try {
-                Thread.sleep(10);
-            } catch (InterruptedException e) {
-                System.out.println("Failure on thread sleep");
-            }
-        }
     }
 
     private List<Cell> buildPath(Map<Cell, Cell> sucessorsMap, Cell goalCell) {

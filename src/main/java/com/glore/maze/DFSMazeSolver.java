@@ -10,12 +10,10 @@ public class DFSMazeSolver implements MazeSolver {
 
     private List<Cell> solution;
     private Map<Cell,Cell> successors;
-    private MazeVisualizer visualizer;
 
-        public DFSMazeSolver(MazeVisualizer visualizer) {
+        public DFSMazeSolver() {
         this.solution = new ArrayList<Cell>();
         this.successors = new HashMap<>();
-        this.visualizer = visualizer;
     }
 
     @Override
@@ -32,24 +30,12 @@ public class DFSMazeSolver implements MazeSolver {
                 chosen.setVisited(true);
                 successors.put(chosen, cell);
                 cell = chosen;
-                visualizeVisited();
             } else {
                 cell = successors.get(cell);
             }
         } while (successors.get(cell) != null && !grid.isGoalCell(cell));
 
         return buildPath(successors, grid.cellAt(grid.goalY(), grid.goalX()));
-    }
-
-    private void visualizeVisited() {
-        if (this.visualizer != null) {
-            visualizer.visualize();
-            try {
-                Thread.sleep(10);
-            } catch (InterruptedException e) {
-                System.out.println("Failure on thread sleep");
-            }
-        }
     }
 
     private List<Cell> buildPath(Map<Cell, Cell> sucessorsMap, Cell goalCell) {
