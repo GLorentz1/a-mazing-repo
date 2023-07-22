@@ -8,7 +8,7 @@ public class MazeMain {
     public static void main(String[] args) {
         Integer size = 20;
 
-        RandomizedKruskalGenerator generator = new RandomizedKruskalGenerator();        
+        BacktrackingMazeGenerator generator = new BacktrackingMazeGenerator();        
         PlayerMovementController controller = new PlayerMovementController(new Player());
         FloodMazeSolver solver = new FloodMazeSolver();
         MazeManager manager = 

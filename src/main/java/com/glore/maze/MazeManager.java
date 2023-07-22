@@ -61,7 +61,7 @@ public class MazeManager {
     }
 
     public void manage() {
-
+        resetVisitedCells();
         getSolution();
         controller.setGrid(grid);
 
