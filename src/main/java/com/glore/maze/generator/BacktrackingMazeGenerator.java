@@ -35,10 +35,6 @@ public class BacktrackingMazeGenerator implements MazeGenerator {
             }
         } while (!stack.isEmpty());
 
-        for(Cell c : maze.cells()) {
-            c.setVisited(false);
-        }
-
         return maze;
     }
 

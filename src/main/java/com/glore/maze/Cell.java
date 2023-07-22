@@ -33,6 +33,28 @@ public class Cell {
         return walls;
     }
 
+    public List<Wall> removeableWalls(Integer dimension) {
+        List<Wall> removeable = new ArrayList<>();
+
+        if(!isTopRow() && hasWall(Wall.TOP)) {
+            removeable.add(0, Wall.TOP);
+        }
+
+        if(!isLeftmostColumn() && hasWall(Wall.LEFT)) {
+            removeable.add(0, Wall.LEFT);
+        }
+
+        if(!isBottomRow(dimension) && hasWall(Wall.BOTTOM)) {
+            removeable.add(0, Wall.BOTTOM);
+        }
+
+        if(!isRightmostColumn(dimension) && hasWall(Wall.RIGHT)) {
+            removeable.add(0, Wall.RIGHT);
+        }
+
+        return removeable;
+    }
+
     public Boolean hasWall(Wall wall) {
         return this.walls.get(wall.ordinal());
     }
