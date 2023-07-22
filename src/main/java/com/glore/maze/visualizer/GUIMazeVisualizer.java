@@ -1,7 +1,12 @@
-package com.glore.maze;
+package com.glore.maze.visualizer;
 
 import javax.swing.*;
 
+import com.glore.maze.Cell;
+import com.glore.maze.Grid;
+import com.glore.maze.MazeVisualizer;
+import com.glore.maze.Player;
+import com.glore.maze.PlayerMovementController;
 import com.glore.maze.Cell.Wall;
 
 import java.awt.*;

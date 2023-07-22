@@ -4,6 +4,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.List;
 import org.junit.Test;
 import com.glore.maze.fixtures.GridFixture;
+import com.glore.maze.solver.BFSMazeSolver;
 
 
 public class FloodMazeSolverTest {

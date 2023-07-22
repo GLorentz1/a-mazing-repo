@@ -1,5 +1,8 @@
 package com.glore.maze;
 
+import com.glore.maze.generator.BacktrackingMazeGenerator;
+import com.glore.maze.solver.FloodMazeSolver;
+
 public class MazeMain {
     public static void main(String[] args) {
         Integer size = 10;

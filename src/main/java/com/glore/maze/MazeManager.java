@@ -2,6 +2,8 @@ package com.glore.maze;
 
 import java.util.List;
 
+import com.glore.maze.visualizer.GUIMazeVisualizer;
+
 public class MazeManager {
     private final PlayerMovementController controller;
     private final MazeVisualizer visualizer;

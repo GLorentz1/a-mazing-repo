@@ -1,10 +1,13 @@
-package com.glore.maze;
+package com.glore.maze.generator;
 
 import java.util.List;
 import java.util.Random;
 import java.util.Stack;
 import java.util.stream.Collectors;
 
+import com.glore.maze.Cell;
+import com.glore.maze.Grid;
+import com.glore.maze.MazeGenerator;
 import com.glore.maze.Cell.Wall;
 
 public class BacktrackingMazeGenerator implements MazeGenerator {

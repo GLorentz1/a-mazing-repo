@@ -1,9 +1,13 @@
-package com.glore.maze;
+package com.glore.maze.solver;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 import java.util.stream.Collectors;
+
+import com.glore.maze.Cell;
+import com.glore.maze.Grid;
+import com.glore.maze.MazeSolver;
 
 public class FloodMazeSolver implements MazeSolver {
     private List<Stack<Cell>> paths;
