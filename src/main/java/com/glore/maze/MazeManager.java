@@ -21,7 +21,6 @@ public class MazeManager {
         this.solver = builder.solver;
         this.size = builder.size;
         this.visualizer = new GUIMazeVisualizer(controller);
-        visualizer.visualize();
 
         if(builder.visualizeGeneration) {
             generator.setVisualizer(this.visualizer);

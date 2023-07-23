@@ -144,6 +144,7 @@ public class GUIMazeVisualizer extends JFrame implements MazeVisualizer{
     @Override
     public void visualizeGrid(Grid grid) {
         this.grid = grid;
+        visualize();
         gridPanel.repaint();
     }
 }
