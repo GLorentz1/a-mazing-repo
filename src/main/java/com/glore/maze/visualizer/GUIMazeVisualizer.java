@@ -17,8 +17,13 @@ public class GUIMazeVisualizer extends JFrame implements MazeVisualizer{
     private JPanel gridPanel;
     private List<Cell> solution;
     private PlayerMovementController movementController;
+    private Grid grid;
 
-    public GUIMazeVisualizer(Grid grid, PlayerMovementController movementController) {
+    public void setGrid(Grid grid) {
+        this.grid = grid;
+    }
+
+    public GUIMazeVisualizer(PlayerMovementController movementController) {
         this.movementController = movementController;
 
         gridPanel = new JPanel() {
@@ -133,6 +138,12 @@ public class GUIMazeVisualizer extends JFrame implements MazeVisualizer{
     @Override
     public void visualizeSolution(List<Cell> path) {
         solution = path;
+        gridPanel.repaint();
+    }
+
+    @Override
+    public void visualizeGrid(Grid grid) {
+        this.grid = grid;
         gridPanel.repaint();
     }
 }

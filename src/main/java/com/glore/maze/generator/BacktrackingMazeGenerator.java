@@ -8,9 +8,28 @@ import java.util.stream.Collectors;
 import com.glore.maze.Cell;
 import com.glore.maze.Grid;
 import com.glore.maze.MazeGenerator;
+import com.glore.maze.MazeVisualizer;
 import com.glore.maze.Cell.Wall;
 
 public class BacktrackingMazeGenerator implements MazeGenerator {
+
+    private MazeVisualizer visualizer = null;
+
+    @Override
+    public void setVisualizer(MazeVisualizer visualizer) {
+        this.visualizer = visualizer;
+    }
+
+    private void visualizeGrid(Grid grid) {
+        if(visualizer != null) {
+            visualizer.visualizeGrid(grid);
+            try {
+                Thread.sleep(5);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     @Override
     public Grid generate(Integer size) {
@@ -33,6 +52,7 @@ public class BacktrackingMazeGenerator implements MazeGenerator {
                 maze.removeWallAt(cell.row(), cell.column(), wallToRemove);
                 cell = chosenNeighbor;
             }
+            visualizeGrid(maze);
         } while (!stack.isEmpty());
 
         return maze;

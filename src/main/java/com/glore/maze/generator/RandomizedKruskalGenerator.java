@@ -15,22 +15,27 @@ import com.glore.maze.Cell;
 import com.glore.maze.Cell.Wall;
 import com.glore.maze.Grid;
 import com.glore.maze.MazeGenerator;
+import com.glore.maze.MazeVisualizer;
 
 public class RandomizedKruskalGenerator implements MazeGenerator {
 
-/*
-while len(lista de sets) > 1:
-----select random cell from mapa cell,{paredes}:
---------select random wall:
---------pega vizinho
---------if set[cell] != set[vizinho]:
---------------retira parede entre a celulas
---------------if nao tem mais paredes removiveis na celula:
--------------------remove do mapa cell,{paredes}
---------------if nao tem mais paredes removiveis no vizinho:
--------------------remove do mapa cell,{paredes}
---------------join dos sets
- */
+    private MazeVisualizer visualizer = null;
+
+    @Override
+    public void setVisualizer(MazeVisualizer visualizer) {
+        this.visualizer = visualizer;
+    }
+
+    private void visualizeGrid(Grid grid) {
+        if(visualizer != null) {
+            visualizer.visualizeGrid(grid);
+            try {
+                Thread.sleep(16);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     @Override
     public Grid generate(Integer size) {
@@ -74,6 +79,8 @@ while len(lista de sets) > 1:
                     cellWalls.remove(neighbor);
                 }
             }
+
+            visualizeGrid(grid);
         }
         
 

@@ -3,14 +3,31 @@ package com.glore.maze.generator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 import com.glore.maze.Cell;
 import com.glore.maze.Cell.Wall;
 import com.glore.maze.Grid;
 import com.glore.maze.MazeGenerator;
+import com.glore.maze.MazeVisualizer;
 
 public class WilsonsMazeGenerator implements MazeGenerator {
+    private MazeVisualizer visualizer = null;
+
+    @Override
+    public void setVisualizer(MazeVisualizer visualizer) {
+        this.visualizer = visualizer;
+    }
+
+    private void visualizeGrid(Grid grid) {
+        if(visualizer != null) {
+            visualizer.visualizeGrid(grid);
+            try {
+                Thread.sleep(32);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     @Override
     public Grid generate(Integer size) {
@@ -23,12 +40,10 @@ public class WilsonsMazeGenerator implements MazeGenerator {
         cellsNotInMaze.addAll(grid.cells());
 
         Cell cell = chooseRandom(cellsNotInMaze);
-        cell.setVisited(true);
         cellsNotInMaze.remove(cell);
         cellsInMaze.add(cell);
 
         Cell initialGoalCell = chooseRandom(cellsNotInMaze);
-        initialGoalCell.setVisited(true);
         cellsInMaze.add(initialGoalCell);
         cellsNotInMaze.remove(initialGoalCell);
 
@@ -56,6 +71,8 @@ public class WilsonsMazeGenerator implements MazeGenerator {
                     cell = chooseRandom(cellsNotInMaze);
                     cellsInCurrentPath.add(0, cell);
                 }
+
+                visualizeGrid(grid);
             } else {
                 if (cellsInCurrentPath.contains(randomNeighbor)) {
                     Integer indexOfNeighbor = cellsInCurrentPath.indexOf(randomNeighbor);

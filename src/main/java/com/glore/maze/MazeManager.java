@@ -20,9 +20,18 @@ public class MazeManager {
         this.generator = builder.generator;
         this.solver = builder.solver;
         this.size = builder.size;
+        this.visualizer = new GUIMazeVisualizer(controller);
+        visualizer.visualize();
+
+        if(builder.visualizeGeneration) {
+            generator.setVisualizer(this.visualizer);
+        }
+        
         this.grid = builder.generator.generate(size);
-        this.visualizer = new GUIMazeVisualizer(this.grid, controller);
         this.player = builder.controller.player();
+
+        visualizer.setGrid(grid);
+        controller.setGrid(grid);
     }
 
     public PlayerMovementController getController() {
@@ -63,8 +72,6 @@ public class MazeManager {
     public void manage() {
         resetVisitedCells();
         getSolution();
-        controller.setGrid(grid);
-
         resetVisitedCells();
 
         while (true) {
@@ -102,6 +109,7 @@ public class MazeManager {
         private MazeGenerator generator;
         private MazeSolver solver;
         private Integer size;
+        private Boolean visualizeGeneration;
 
         public Builder() {}
 
@@ -123,6 +131,11 @@ public class MazeManager {
 
         public Builder withSolver(MazeSolver solver) {
             this.solver = solver;
+            return this;
+        }
+
+        public Builder withMazeGenerationVisualization(Boolean visualizeGeneration) {
+            this.visualizeGeneration = visualizeGeneration;
             return this;
         }
 
