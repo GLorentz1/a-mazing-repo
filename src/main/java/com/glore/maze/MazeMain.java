@@ -13,7 +13,7 @@ public class MazeMain {
     public static void main(String[] args) {
         Integer size = 50;
 
-        RandomizedKruskalGenerator generator = new RandomizedKruskalGenerator();        
+        WilsonsMazeGenerator generator = new WilsonsMazeGenerator();        
         PlayerMovementController controller = new PlayerMovementController(new Player());
         FloodMazeSolver solver = new FloodMazeSolver();
         MazeManager manager = 
@@ -23,6 +23,7 @@ public class MazeMain {
                                 .withGenerator(generator, size)
                                 .withSolver(solver)
                                 .withMazeGenerationVisualization(true)
+                                .withMazeSolutionGenerationVisualization(false)
                                 .build();
         
         manager.manage();

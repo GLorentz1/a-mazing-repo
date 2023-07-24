@@ -28,6 +28,9 @@ public class MazeManager {
 
         if(builder.visualizeGeneration) {
             generator.setVisualizer(this.visualizer);
+        }
+
+        if(builder.visualizeSolutionGeneration) {
             solver.setVisualizer(this.visualizer);
         }
         
@@ -140,6 +143,7 @@ public class MazeManager {
         private MazeSolver solver;
         private Integer size;
         private Boolean visualizeGeneration;
+        private Boolean visualizeSolutionGeneration;
 
         public Builder() {}
 
@@ -171,6 +175,11 @@ public class MazeManager {
 
         public Builder withMazeGenerationVisualization(Boolean visualizeGeneration) {
             this.visualizeGeneration = visualizeGeneration;
+            return this;
+        }
+
+        public Builder withMazeSolutionGenerationVisualization(Boolean visualizeSolutionGeneration) {
+            this.visualizeSolutionGeneration = visualizeSolutionGeneration;
             return this;
         }
 
