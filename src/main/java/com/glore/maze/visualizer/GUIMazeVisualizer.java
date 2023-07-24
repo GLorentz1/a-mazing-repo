@@ -7,6 +7,7 @@ import com.glore.maze.Grid;
 import com.glore.maze.MazeVisualizer;
 import com.glore.maze.Player;
 import com.glore.maze.Cell.Wall;
+import com.glore.maze.controller.MenuController;
 import com.glore.maze.controller.PlayerMovementController;
 
 import java.awt.*;
@@ -16,15 +17,18 @@ public class GUIMazeVisualizer extends JFrame implements MazeVisualizer{
     private static Integer cellSize = 20;
     private JPanel gridPanel;
     private List<Cell> solution;
-    private PlayerMovementController movementController;
+    private PlayerMovementController playerController;
+    private MenuController menuController;
     private Grid grid;
 
     public void setGrid(Grid grid) {
         this.grid = grid;
     }
 
-    public GUIMazeVisualizer(PlayerMovementController movementController) {
-        this.movementController = movementController;
+    public GUIMazeVisualizer(PlayerMovementController playerController, MenuController menuController) {
+        this.playerController = playerController;
+        this.menuController = menuController;
+
 
         gridPanel = new JPanel() {
             @Override
@@ -40,8 +44,9 @@ public class GUIMazeVisualizer extends JFrame implements MazeVisualizer{
                 paintInitialCell(g);
                 paintGoalCell(g);
                 paintVisited(g, grid);
+                paintPlayer(g, playerController, menuController);
                 paintGrid(g);
-                paintPlayer(g, movementController);
+
             }
 
             private void paintSolution(Graphics g) {
@@ -75,11 +80,16 @@ public class GUIMazeVisualizer extends JFrame implements MazeVisualizer{
                 g.fillRect(cellSize, cellSize, cellSize, cellSize);
             }
 
-            private void paintPlayer(Graphics g, PlayerMovementController controller) {
+            private void paintPlayer(Graphics g, PlayerMovementController controller, MenuController menuController) {
+                if(menuController.requestedToDisplay()) {
+                    g.setColor(Color.cyan);
+                } else {
+                    g.setColor(Color.red);
+                }
+
                 Player player = controller.player();
                 Integer X = (cellSize + player.getPlayerX() * cellSize) + cellSize/2;
                 Integer Y = (cellSize + player.getPlayerY() * cellSize) + cellSize/2;
-                g.setColor(Color.red);
                 g.fillRect(X, Y, cellSize/4, cellSize/4);
             }
 
@@ -130,7 +140,8 @@ public class GUIMazeVisualizer extends JFrame implements MazeVisualizer{
             setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             setLocationRelativeTo(null);
             setContentPane(gridPanel);
-            addKeyListener(movementController);
+            addKeyListener(playerController);
+            addKeyListener(menuController);
             pack();
             setVisible(true);
             setFocusable(true);
@@ -150,5 +161,12 @@ public class GUIMazeVisualizer extends JFrame implements MazeVisualizer{
         this.grid = grid;
         visualize();
         gridPanel.repaint();
+    }
+
+    @Override
+    public void finish() {
+        SwingUtilities.invokeLater(() -> {
+            dispose();
+        });
     }
 }

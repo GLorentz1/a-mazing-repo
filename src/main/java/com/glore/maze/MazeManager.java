@@ -2,11 +2,13 @@ package com.glore.maze;
 
 import java.util.List;
 
+import com.glore.maze.controller.MenuController;
 import com.glore.maze.controller.PlayerMovementController;
 import com.glore.maze.visualizer.GUIMazeVisualizer;
 
 public class MazeManager {
-    private final PlayerMovementController controller;
+    private final PlayerMovementController playerController;
+    private final MenuController menuController;
     private final MazeVisualizer visualizer;
     private final MazeGenerator generator;
     private final MazeSolver solver;
@@ -17,11 +19,12 @@ public class MazeManager {
     private List<Cell> solution;
 
     public MazeManager(Builder builder) {
-        this.controller = builder.controller;
+        this.playerController = builder.playerController;
+        this.menuController = builder.menuController;
         this.generator = builder.generator;
         this.solver = builder.solver;
         this.size = builder.size;
-        this.visualizer = new GUIMazeVisualizer(controller);
+        this.visualizer = new GUIMazeVisualizer(playerController, menuController);
 
         if(builder.visualizeGeneration) {
             generator.setVisualizer(this.visualizer);
@@ -29,14 +32,14 @@ public class MazeManager {
         }
         
         this.grid = builder.generator.generate(size);
-        this.player = builder.controller.player();
+        this.player = builder.playerController.player();
 
         visualizer.setGrid(grid);
-        controller.setGrid(grid);
+        playerController.setGrid(grid);
     }
 
-    public PlayerMovementController getController() {
-        return controller;
+    public PlayerMovementController getPlayerController() {
+        return playerController;
     }
 
     public MazeVisualizer getVisualizer() {
@@ -75,19 +78,27 @@ public class MazeManager {
         getSolution();
         resetVisitedCells();
 
-        while (true) {
+        while (menuController.endMaze().equals(false)) {
             try {
                 
                 Thread.sleep(64);
-                visualizer.visualize();
+                if(menuController.requestedToDisplay()) {
+                    visualizer.visualizeSolution(solution);
+                } else {
+                    visualizer.visualizeSolution(null);
+                }
 
                 visualizeSolutionIfReachedGoal();
             
-                controller.reset();
+                playerController.reset();
+                menuController.reset();
+
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
+
+        visualizer.finish();
     }
 
     private void visualizeSolutionIfReachedGoal() {
@@ -105,7 +116,8 @@ public class MazeManager {
     
     
     public static final class Builder {
-        private PlayerMovementController controller;
+        private PlayerMovementController playerController;
+        private MenuController menuController;
         private MazeVisualizer visualizer;
         private MazeGenerator generator;
         private MazeSolver solver;
@@ -114,8 +126,13 @@ public class MazeManager {
 
         public Builder() {}
 
-        public Builder withController(PlayerMovementController controller) {
-            this.controller = controller;
+        public Builder withPlayerController(PlayerMovementController controller) {
+            this.playerController = controller;
+            return this;
+        }
+
+        public Builder withMenuController(MenuController controller) {
+            this.menuController = controller;
             return this;
         }
 

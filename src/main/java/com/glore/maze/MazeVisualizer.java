@@ -7,4 +7,5 @@ public interface MazeVisualizer {
     void visualizeSolution(List<Cell> path);
     void visualizeGrid(Grid grid);
     void setGrid(Grid grid);
+    void finish();
 }

@@ -1,5 +1,6 @@
 package com.glore.maze;
 
+import com.glore.maze.controller.MenuController;
 import com.glore.maze.controller.PlayerMovementController;
 import com.glore.maze.generator.BacktrackingMazeGenerator;
 import com.glore.maze.generator.RandomizedKruskalGenerator;
@@ -12,15 +13,16 @@ public class MazeMain {
     public static void main(String[] args) {
         Integer size = 20;
 
-        RandomizedKruskalGenerator generator = new RandomizedKruskalGenerator();        
+        WilsonsMazeGenerator generator = new WilsonsMazeGenerator();        
         PlayerMovementController controller = new PlayerMovementController(new Player());
-        DFSMazeSolver solver = new DFSMazeSolver();
+        FloodMazeSolver solver = new FloodMazeSolver();
         MazeManager manager = 
                             new MazeManager.Builder()
-                                .withController(controller)
+                                .withPlayerController(controller)
+                                .withMenuController(new MenuController())
                                 .withGenerator(generator, size)
                                 .withSolver(solver)
-                                .withMazeGenerationVisualization(false)
+                                .withMazeGenerationVisualization(true)
                                 .build();
         
         manager.manage();

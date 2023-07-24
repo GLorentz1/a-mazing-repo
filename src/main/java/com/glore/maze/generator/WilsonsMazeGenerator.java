@@ -89,10 +89,6 @@ public class WilsonsMazeGenerator implements MazeGenerator {
 
 
     private <T> T chooseRandom(List<T> list) {
-
-        if (list.size() == 0) {
-            Integer a = 0;
-        }
         Random random = new Random();
         int randomIndex = random.nextInt(list.size());
         return list.get(randomIndex);
