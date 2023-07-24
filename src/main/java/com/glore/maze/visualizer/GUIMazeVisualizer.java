@@ -6,8 +6,8 @@ import com.glore.maze.Cell;
 import com.glore.maze.Grid;
 import com.glore.maze.MazeVisualizer;
 import com.glore.maze.Player;
-import com.glore.maze.PlayerMovementController;
 import com.glore.maze.Cell.Wall;
+import com.glore.maze.controller.PlayerMovementController;
 
 import java.awt.*;
 import java.util.List;

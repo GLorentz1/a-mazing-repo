@@ -1,5 +1,6 @@
 package com.glore.maze;
 
+import com.glore.maze.controller.PlayerMovementController;
 import com.glore.maze.generator.BacktrackingMazeGenerator;
 import com.glore.maze.generator.RandomizedKruskalGenerator;
 import com.glore.maze.generator.WilsonsMazeGenerator;

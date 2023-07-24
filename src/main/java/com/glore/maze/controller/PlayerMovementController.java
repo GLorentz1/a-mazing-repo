@@ -1,7 +1,9 @@
-package com.glore.maze;
+package com.glore.maze.controller;
 
 import java.awt.event.*;
 
+import com.glore.maze.Grid;
+import com.glore.maze.Player;
 import com.glore.maze.Cell.Wall;
 
 public class PlayerMovementController  implements KeyListener {
