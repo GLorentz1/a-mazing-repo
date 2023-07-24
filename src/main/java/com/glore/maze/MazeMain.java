@@ -11,7 +11,7 @@ import com.glore.maze.solver.FloodMazeSolver;
 
 public class MazeMain {
     public static void main(String[] args) {
-        Integer size = 10;
+        Integer size = 15;
 
         RandomizedKruskalGenerator generator = new RandomizedKruskalGenerator();        
         PlayerMovementController controller = new PlayerMovementController(new Player());

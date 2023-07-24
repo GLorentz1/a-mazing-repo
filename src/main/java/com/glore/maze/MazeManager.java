@@ -81,7 +81,9 @@ public class MazeManager {
         getSolution();
         resetVisitedCells();
 
-        while (menuController.endMaze().equals(false)) {
+        Boolean hasWon = false;
+
+        while (menuController.endMaze().equals(false) && !hasWon) {
             try {
                 Thread.sleep(8);
                 
@@ -91,11 +93,13 @@ public class MazeManager {
                     visualizer.visualizeSolution(null);  
                 }
 
-                visualizeSolutionIfReachedGoal();
+                hasWon = visualizeSolutionAndEndGameIfGoalIsReached();
             
                 playerController.reset();
                 menuController.reset();
                 visualizer.visualize();
+
+                sleepIfHasWon(hasWon);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -104,11 +108,23 @@ public class MazeManager {
         visualizer.finish();
     }
 
-    private void visualizeSolutionIfReachedGoal() {
+    private void sleepIfHasWon(Boolean hasWon) {
+        if(hasWon) {
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private Boolean visualizeSolutionAndEndGameIfGoalIsReached() {
         Cell currentCell = grid.cellAt(player.getPlayerY(), player.getPlayerX());
         if(grid.isGoalCell(currentCell)) {
             visualizer.visualizeSolution(solution);
+            return true;
         }
+        return false;
     }
 
     private void resetVisitedCells() {
