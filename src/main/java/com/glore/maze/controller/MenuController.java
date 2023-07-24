@@ -13,6 +13,7 @@ public class MenuController implements KeyListener {
         if(e.getKeyCode() == KeyEvent.VK_SPACE && !hasFlipped) {
             if(!this.hasFlipped) {
                 this.displaySolution = !displaySolution;
+                this.hasFlipped = true;
             }
         } else if(e.getKeyCode() == KeyEvent.VK_ESCAPE) {
             this.end = true;

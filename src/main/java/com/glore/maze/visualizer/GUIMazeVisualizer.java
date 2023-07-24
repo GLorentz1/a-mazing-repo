@@ -42,8 +42,8 @@ public class GUIMazeVisualizer extends JFrame implements MazeVisualizer{
 
                 paintSolution(g);
                 paintInitialCell(g);
-                paintGoalCell(g);
                 paintVisited(g, grid);
+                paintGoalCell(g);
                 paintPlayer(g, playerController, menuController);
                 paintGrid(g);
 
@@ -147,20 +147,16 @@ public class GUIMazeVisualizer extends JFrame implements MazeVisualizer{
             setFocusable(true);
             requestFocusInWindow();
         });
-
     }
 
     @Override
     public void visualizeSolution(List<Cell> path) {
-        solution = path;
-        gridPanel.repaint();
+        this.solution = path;
     }
 
     @Override
     public void visualizeGrid(Grid grid) {
         this.grid = grid;
-        visualize();
-        gridPanel.repaint();
     }
 
     @Override

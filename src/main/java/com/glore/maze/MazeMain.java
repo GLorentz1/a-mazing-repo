@@ -11,9 +11,9 @@ import com.glore.maze.solver.FloodMazeSolver;
 
 public class MazeMain {
     public static void main(String[] args) {
-        Integer size = 20;
+        Integer size = 10;
 
-        WilsonsMazeGenerator generator = new WilsonsMazeGenerator();        
+        RandomizedKruskalGenerator generator = new RandomizedKruskalGenerator();        
         PlayerMovementController controller = new PlayerMovementController(new Player());
         FloodMazeSolver solver = new FloodMazeSolver();
         MazeManager manager = 
@@ -22,7 +22,7 @@ public class MazeMain {
                                 .withMenuController(new MenuController())
                                 .withGenerator(generator, size)
                                 .withSolver(solver)
-                                .withMazeGenerationVisualization(true)
+                                .withMazeGenerationVisualization(false)
                                 .build();
         
         manager.manage();

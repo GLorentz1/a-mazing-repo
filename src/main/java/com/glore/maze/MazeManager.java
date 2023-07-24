@@ -32,10 +32,14 @@ public class MazeManager {
         }
         
         this.grid = builder.generator.generate(size);
+        resetVisitedCells();
+
         this.player = builder.playerController.player();
 
         visualizer.setGrid(grid);
         playerController.setGrid(grid);
+
+        visualizer.visualize();
     }
 
     public PlayerMovementController getPlayerController() {
@@ -74,25 +78,24 @@ public class MazeManager {
     }
 
     public void manage() {
-        resetVisitedCells();
         getSolution();
         resetVisitedCells();
 
         while (menuController.endMaze().equals(false)) {
             try {
+                Thread.sleep(8);
                 
-                Thread.sleep(64);
                 if(menuController.requestedToDisplay()) {
                     visualizer.visualizeSolution(solution);
                 } else {
-                    visualizer.visualizeSolution(null);
+                    visualizer.visualizeSolution(null);  
                 }
 
                 visualizeSolutionIfReachedGoal();
             
                 playerController.reset();
                 menuController.reset();
-
+                visualizer.visualize();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
