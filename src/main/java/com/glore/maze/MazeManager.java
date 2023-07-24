@@ -38,8 +38,6 @@ public class MazeManager {
 
         visualizer.setGrid(grid);
         playerController.setGrid(grid);
-
-        visualizer.visualize();
     }
 
     public PlayerMovementController getPlayerController() {

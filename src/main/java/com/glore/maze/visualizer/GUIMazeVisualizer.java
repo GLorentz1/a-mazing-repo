@@ -50,7 +50,7 @@ public class GUIMazeVisualizer extends JFrame implements MazeVisualizer{
             }
 
             private void paintSolution(Graphics g) {
-                g.setColor(Color.MAGENTA);
+                g.setColor(Color.LIGHT_GRAY);
 
                 if(solution != null && !solution.isEmpty()) {
                     for (Cell cell : solution) {
@@ -156,6 +156,7 @@ public class GUIMazeVisualizer extends JFrame implements MazeVisualizer{
 
     @Override
     public void visualizeGrid(Grid grid) {
+        visualize();
         this.grid = grid;
     }
 

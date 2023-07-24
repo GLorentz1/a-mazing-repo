@@ -19,7 +19,7 @@ public class WilsonsMazeGenerator implements MazeGenerator {
     }
 
     private void visualizeGrid(Grid grid) {
-        if(visualizer != null) {
+        if (visualizer != null) {
             visualizer.visualizeGrid(grid);
             try {
                 Thread.sleep(8);
@@ -49,34 +49,34 @@ public class WilsonsMazeGenerator implements MazeGenerator {
 
         cellsInCurrentPath.add(0, cell);
 
-        while(cellsNotInMaze.size() > 0) {
+        while (cellsNotInMaze.size() > 0) {
             List<Cell> aptNeighbors = grid.positionalNeighbors(cell);
             Cell randomNeighbor = chooseRandom(aptNeighbors);
 
-            if(cellsInMaze.contains(randomNeighbor)) {
-                cellsInMaze.addAll(cellsInCurrentPath);
-                cellsNotInMaze.removeAll(cellsInCurrentPath);
-                cellsInCurrentPath.add(randomNeighbor);
-
-                for(Integer z=0; z < cellsInCurrentPath.size() - 1; z++){
-                    Cell cell1 = cellsInCurrentPath.get(z);
-                    Cell cell2 = cellsInCurrentPath.get(z+1);
-
-                    Wall wallToRemove = determineWallToRemove(cell1, cell2);
-                    grid.removeWallAt(cell1.row(), cell1.column(), wallToRemove);
-                    visualizeGrid(grid);
-                }
-                
-                cellsInCurrentPath = new ArrayList<>();
-                if (cellsNotInMaze.size() > 0) {
-                    cell = chooseRandom(cellsNotInMaze);
-                    cellsInCurrentPath.add(0, cell);
-                }
+            if (cellsInCurrentPath.contains(randomNeighbor)) {
+                Integer indexOfNeighbor = cellsInCurrentPath.indexOf(randomNeighbor);
+                cellsInCurrentPath = cellsInCurrentPath.subList(0, indexOfNeighbor + 1);
+                cell = randomNeighbor;
             } else {
-                if (cellsInCurrentPath.contains(randomNeighbor)) {
-                    Integer indexOfNeighbor = cellsInCurrentPath.indexOf(randomNeighbor);
-                    cellsInCurrentPath = cellsInCurrentPath.subList(0, indexOfNeighbor+1);
-                    cell = randomNeighbor;
+                if (cellsInMaze.contains(randomNeighbor)) {
+                    cellsInMaze.addAll(cellsInCurrentPath);
+                    cellsInCurrentPath.add(randomNeighbor);
+                    cellsNotInMaze.removeAll(cellsInCurrentPath);
+
+                    for (Integer z = 0; z < cellsInCurrentPath.size() - 1; z++) {
+                        Cell cell1 = cellsInCurrentPath.get(z);
+                        Cell cell2 = cellsInCurrentPath.get(z + 1);
+
+                        Wall wallToRemove = determineWallToRemove(cell1, cell2);
+                        grid.removeWallAt(cell1.row(), cell1.column(), wallToRemove);
+                        visualizeGrid(grid);
+                    }
+
+                    cellsInCurrentPath = new ArrayList<>();
+                    if (cellsNotInMaze.size() > 0) {
+                        cell = chooseRandom(cellsNotInMaze);
+                        cellsInCurrentPath.add(0, cell);
+                    }
                 } else {
                     cellsInCurrentPath.add(randomNeighbor);
                     cell = randomNeighbor;
@@ -86,7 +86,6 @@ public class WilsonsMazeGenerator implements MazeGenerator {
 
         return grid;
     }
-
 
     private <T> T chooseRandom(List<T> list) {
         Random random = new Random();
@@ -104,9 +103,9 @@ public class WilsonsMazeGenerator implements MazeGenerator {
             return Wall.LEFT;
         } else if (yDiff == 1) {
             return Wall.TOP;
-         } else {
+        } else {
             return Wall.BOTTOM;
         }
     }
-    
+
 }
