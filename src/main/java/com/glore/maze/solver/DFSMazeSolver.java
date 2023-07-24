@@ -9,13 +9,31 @@ import java.util.stream.Collectors;
 import com.glore.maze.Cell;
 import com.glore.maze.Grid;
 import com.glore.maze.MazeSolver;
+import com.glore.maze.MazeVisualizer;
 
 public class DFSMazeSolver implements MazeSolver {
 
     private List<Cell> solution;
     private Map<Cell,Cell> successors;
+    private MazeVisualizer visualizer = null;
 
-        public DFSMazeSolver() {
+    @Override
+    public void setVisualizer(MazeVisualizer visualizer) {
+        this.visualizer = visualizer;
+    }
+
+    private void visualizeGrid(Grid grid) {
+        if(visualizer != null) {
+            visualizer.visualizeGrid(grid);
+            try {
+                Thread.sleep(16);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public DFSMazeSolver() {
         this.solution = new ArrayList<Cell>();
         this.successors = new HashMap<>();
     }
@@ -37,6 +55,8 @@ public class DFSMazeSolver implements MazeSolver {
             } else {
                 cell = successors.get(cell);
             }
+
+            visualizeGrid(grid);
         } while (successors.get(cell) != null && !grid.isGoalCell(cell));
 
         return buildPath(successors, grid.cellAt(grid.goalY(), grid.goalX()));

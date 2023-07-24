@@ -10,11 +10,29 @@ import java.util.stream.Collectors;
 import com.glore.maze.Cell;
 import com.glore.maze.Grid;
 import com.glore.maze.MazeSolver;
+import com.glore.maze.MazeVisualizer;
 
 public class BFSMazeSolver implements MazeSolver {
     private List<Cell> solution;
     private Stack<Cell> stack;
     private Map<Cell,Cell> successors;
+    private MazeVisualizer visualizer = null;
+
+    @Override
+    public void setVisualizer(MazeVisualizer visualizer) {
+        this.visualizer = visualizer;
+    }
+
+    private void visualizeGrid(Grid grid) {
+        if(visualizer != null) {
+            visualizer.visualizeGrid(grid);
+            try {
+                Thread.sleep(16);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     public BFSMazeSolver() {
         this.stack = new Stack<Cell>();
@@ -38,7 +56,7 @@ public class BFSMazeSolver implements MazeSolver {
                 stack.push(unvisitedNeighbor);
                 successors.put(unvisitedNeighbor, cell);
             }
-
+            visualizeGrid(grid);
         } while (!stack.isEmpty() && !grid.isGoalCell(cell));
 
         return buildPath(successors, grid.cellAt(grid.goalY(), grid.goalX()));

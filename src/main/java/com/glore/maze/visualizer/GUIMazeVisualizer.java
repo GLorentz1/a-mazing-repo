@@ -13,7 +13,7 @@ import java.awt.*;
 import java.util.List;
 
 public class GUIMazeVisualizer extends JFrame implements MazeVisualizer{
-    private static Integer cellSize = 30;
+    private static Integer cellSize = 20;
     private JPanel gridPanel;
     private List<Cell> solution;
     private PlayerMovementController movementController;
@@ -97,20 +97,24 @@ public class GUIMazeVisualizer extends JFrame implements MazeVisualizer{
                         int x = cellSize + j * cellSize;
                         int y = cellSize + i * cellSize;
 
-                        if (cell.hasWall(Wall.LEFT)) {
-                            g.drawLine(x, y, x, y + cellSize);
-                        }
+                        if(!cell.walls().contains(false)) {
+                            g.fillRect(x, y, cellSize, cellSize);
+                        } else {
+                            if (cell.hasWall(Wall.LEFT)) {
+                                g.drawLine(x, y, x, y + cellSize);
+                            }
 
-                        if (cell.hasWall(Wall.TOP)) {
-                            g.drawLine(x, y, x + cellSize, y);
-                        }
+                            if (cell.hasWall(Wall.TOP)) {
+                                g.drawLine(x, y, x + cellSize, y);
+                            }
 
-                        if (cell.hasWall(Wall.RIGHT)) {
-                            g.drawLine(x + cellSize, y, x + cellSize, y + cellSize);
-                        }
+                            if (cell.hasWall(Wall.RIGHT)) {
+                                g.drawLine(x + cellSize, y, x + cellSize, y + cellSize);
+                            }
 
-                        if (cell.hasWall(Wall.BOTTOM)) {
-                            g.drawLine(x, y + cellSize, x + cellSize, y + cellSize);
+                            if (cell.hasWall(Wall.BOTTOM)) {
+                                g.drawLine(x, y + cellSize, x + cellSize, y + cellSize);
+                            }
                         }
                     }
                 }

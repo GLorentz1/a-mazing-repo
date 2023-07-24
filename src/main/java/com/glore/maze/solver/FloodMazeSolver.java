@@ -8,9 +8,27 @@ import java.util.stream.Collectors;
 import com.glore.maze.Cell;
 import com.glore.maze.Grid;
 import com.glore.maze.MazeSolver;
+import com.glore.maze.MazeVisualizer;
 
 public class FloodMazeSolver implements MazeSolver {
     private List<Stack<Cell>> paths;
+    private MazeVisualizer visualizer = null;
+
+    @Override
+    public void setVisualizer(MazeVisualizer visualizer) {
+        this.visualizer = visualizer;
+    }
+
+    private void visualizeGrid(Grid grid) {
+        if(visualizer != null) {
+            visualizer.visualizeGrid(grid);
+            try {
+                Thread.sleep(32);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     public FloodMazeSolver() {
         this.paths = new ArrayList<Stack<Cell>>();
@@ -45,6 +63,7 @@ public class FloodMazeSolver implements MazeSolver {
 
                 paths = newPaths;
             }
+            visualizeGrid(grid);
         } while (grid.cellAt(grid.goalY(), grid.goalX()).visited() == false);
 
         return paths.stream().filter(p -> p.peek().equals(grid.cellAt(grid.goalY(), grid.goalX()))).toList().get(0);

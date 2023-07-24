@@ -4,4 +4,5 @@ import java.util.List;
 
 public interface MazeSolver {
     List<Cell> solve(Grid grid);
+    void setVisualizer(MazeVisualizer visualizer);
 }

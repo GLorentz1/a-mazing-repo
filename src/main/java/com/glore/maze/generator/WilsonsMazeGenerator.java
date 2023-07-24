@@ -22,7 +22,7 @@ public class WilsonsMazeGenerator implements MazeGenerator {
         if(visualizer != null) {
             visualizer.visualizeGrid(grid);
             try {
-                Thread.sleep(32);
+                Thread.sleep(8);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -64,6 +64,7 @@ public class WilsonsMazeGenerator implements MazeGenerator {
 
                     Wall wallToRemove = determineWallToRemove(cell1, cell2);
                     grid.removeWallAt(cell1.row(), cell1.column(), wallToRemove);
+                    visualizeGrid(grid);
                 }
                 
                 cellsInCurrentPath = new ArrayList<>();
@@ -71,8 +72,6 @@ public class WilsonsMazeGenerator implements MazeGenerator {
                     cell = chooseRandom(cellsNotInMaze);
                     cellsInCurrentPath.add(0, cell);
                 }
-
-                visualizeGrid(grid);
             } else {
                 if (cellsInCurrentPath.contains(randomNeighbor)) {
                     Integer indexOfNeighbor = cellsInCurrentPath.indexOf(randomNeighbor);

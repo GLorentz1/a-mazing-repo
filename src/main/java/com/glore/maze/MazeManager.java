@@ -24,6 +24,7 @@ public class MazeManager {
 
         if(builder.visualizeGeneration) {
             generator.setVisualizer(this.visualizer);
+            solver.setVisualizer(this.visualizer);
         }
         
         this.grid = builder.generator.generate(size);
