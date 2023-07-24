@@ -14,7 +14,7 @@ import java.awt.*;
 import java.util.List;
 
 public class GUIMazeVisualizer extends JFrame implements MazeVisualizer{
-    private static Integer cellSize = 20;
+    private static Integer cellSize = 15;
     private JPanel gridPanel;
     private List<Cell> solution;
     private PlayerMovementController playerController;

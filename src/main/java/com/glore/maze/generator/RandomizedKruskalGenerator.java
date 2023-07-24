@@ -77,9 +77,10 @@ public class RandomizedKruskalGenerator implements MazeGenerator {
                 } else {
                     cellWalls.remove(neighbor);
                 }
+                visualizeGrid(grid);
             }
 
-            visualizeGrid(grid);
+            
         }
         
 
