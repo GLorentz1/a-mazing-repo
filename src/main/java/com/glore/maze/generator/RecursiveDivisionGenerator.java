@@ -56,45 +56,55 @@ public class RecursiveDivisionGenerator implements MazeGenerator {
             Direction direction = chooseRandom(createProportionalListWithDirection(chamber));
 
             if(direction.equals(Direction.VERTICAL)) {
-                int randomIndex = random.nextInt(chamber.getStartingColumn(), chamber.getEndingColumn());
+                int lineIndex = createRandomVerticalLine(maze, chamber);
 
-                int randomIndexToIgnore = random.nextInt(chamber.getStartingRow(), chamber.getEndingRow());
-
-                for(Integer i = chamber.getStartingRow(); i <= chamber.getEndingRow(); i++) {
-                    if(i != randomIndexToIgnore) {
-                        Cell cell = maze.cellAt(i, randomIndex);
-                        maze.addWallAt(cell.row(), cell.column(), Wall.RIGHT);
-                    }
-                }
-                
-                visualizeGrid(maze);
-
-                Chamber newChamberOne = new Chamber(chamber.getStartingRow(), chamber.getEndingRow(), chamber.getStartingColumn(), randomIndex);
-                Chamber newChamberTwo = new Chamber(chamber.getStartingRow(), chamber.getEndingRow(), randomIndex+1, chamber.getEndingColumn());
+                Chamber newChamberOne = new Chamber(chamber.getStartingRow(), chamber.getEndingRow(), chamber.getStartingColumn(), lineIndex);
+                Chamber newChamberTwo = new Chamber(chamber.getStartingRow(), chamber.getEndingRow(), lineIndex+1, chamber.getEndingColumn());
                 
                 recurse(maze, newChamberOne);
                 recurse(maze, newChamberTwo);
             } else {
-                int randomIndex = random.nextInt(chamber.getStartingRow(), chamber.getEndingRow());
-                int randomIndexToIgnore = random.nextInt(chamber.getStartingColumn(), chamber.getEndingColumn());
+                int lineIndex = createRandomHorizontalLine(maze, chamber);
 
-
-                for(Integer i = chamber.getStartingColumn(); i <= chamber.getEndingColumn(); i++) {
-                    if (i != randomIndexToIgnore) {
-                        Cell cell = maze.cellAt(randomIndex, i);
-                        maze.addWallAt(cell.row(), cell.column(), Wall.BOTTOM);
-                    }
-                }
-
-                visualizeGrid(maze);
-
-                Chamber newChamberOne = new Chamber(chamber.getStartingRow(), randomIndex, chamber.getStartingColumn(), chamber.getEndingColumn());
-                Chamber newChamberTwo = new Chamber(randomIndex+1, chamber.getEndingRow(), chamber.getStartingColumn(), chamber.getEndingColumn());
+                Chamber newChamberOne = new Chamber(chamber.getStartingRow(), lineIndex, chamber.getStartingColumn(), chamber.getEndingColumn());
+                Chamber newChamberTwo = new Chamber(lineIndex+1, chamber.getEndingRow(), chamber.getStartingColumn(), chamber.getEndingColumn());
                 
                 recurse(maze, newChamberOne);
                 recurse(maze, newChamberTwo);
             }
         } 
+    }
+
+    private int createRandomVerticalLine(Grid maze, Chamber chamber) {
+        int randomIndex = random.nextInt(chamber.getStartingColumn(), chamber.getEndingColumn());
+
+        int randomIndexToIgnore = random.nextInt(chamber.getStartingRow(), chamber.getEndingRow());
+
+        for(Integer i = chamber.getStartingRow(); i <= chamber.getEndingRow(); i++) {
+            if(i != randomIndexToIgnore) {
+                Cell cell = maze.cellAt(i, randomIndex);
+                maze.addWallAt(cell.row(), cell.column(), Wall.RIGHT);
+            }
+        }
+        
+        visualizeGrid(maze);
+        return randomIndex;
+    }
+
+    private int createRandomHorizontalLine(Grid maze, Chamber chamber) {
+        int randomIndex = random.nextInt(chamber.getStartingRow(), chamber.getEndingRow());
+        int randomIndexToIgnore = random.nextInt(chamber.getStartingColumn(), chamber.getEndingColumn());
+
+
+        for(Integer i = chamber.getStartingColumn(); i <= chamber.getEndingColumn(); i++) {
+            if (i != randomIndexToIgnore) {
+                Cell cell = maze.cellAt(randomIndex, i);
+                maze.addWallAt(cell.row(), cell.column(), Wall.BOTTOM);
+            }
+        }
+
+        visualizeGrid(maze);
+        return randomIndex;
     }
 
     private List<Direction> createProportionalListWithDirection(Chamber chamber) {
