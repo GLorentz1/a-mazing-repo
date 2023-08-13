@@ -1,5 +1,6 @@
 package com.glore.maze.generator;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Stack;
@@ -14,6 +15,8 @@ import com.glore.maze.Cell.Wall;
 public class RecursiveDivisionGenerator implements MazeGenerator {
 
     private MazeVisualizer visualizer = null;
+    private Random random = new Random();
+
 
     @Override
     public void setVisualizer(MazeVisualizer visualizer) {
@@ -24,7 +27,7 @@ public class RecursiveDivisionGenerator implements MazeGenerator {
         if(visualizer != null) {
             visualizer.visualizeGrid(grid);
             try {
-                Thread.sleep(50);
+                Thread.sleep(10);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -49,11 +52,8 @@ public class RecursiveDivisionGenerator implements MazeGenerator {
     }
 
     private void recurse(Grid maze, Chamber chamber) {
-        Random random = new Random();
-
-
         if(chamber.getEndingColumn() - chamber.getStartingColumn() >= 1 && chamber.getEndingRow() - chamber.getStartingRow() >= 1) {
-            Direction direction = chooseRandom(List.of(Direction.HORIZONTAL, Direction.VERTICAL));
+            Direction direction = chooseRandom(createProportionalListWithDirection(chamber));
 
             if(direction.equals(Direction.VERTICAL)) {
                 int randomIndex = random.nextInt(chamber.getStartingColumn(), chamber.getEndingColumn());
@@ -95,6 +95,20 @@ public class RecursiveDivisionGenerator implements MazeGenerator {
                 recurse(maze, newChamberTwo);
             }
         } 
+    }
+
+    private List<Direction> createProportionalListWithDirection(Chamber chamber) {
+        List<Direction> directionToChoose = new ArrayList<>();
+
+        for(Integer i = 0; i < chamber.getEndingColumn() - chamber.getStartingColumn(); i++) {
+            directionToChoose.add(Direction.VERTICAL);
+        }
+
+        for(Integer i = 0; i < chamber.getEndingRow() - chamber.getStartingRow(); i++) {
+            directionToChoose.add(Direction.HORIZONTAL);
+        }
+        
+        return directionToChoose;
     }
 
     private <T> T chooseRandom(List<T> list) {
