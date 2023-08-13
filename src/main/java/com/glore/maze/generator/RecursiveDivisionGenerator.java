@@ -93,34 +93,14 @@ public class RecursiveDivisionGenerator implements MazeGenerator {
                 
                 recurse(maze, newChamberOne);
                 recurse(maze, newChamberTwo);
-
             }
-
-        }
-
-
-        
+        } 
     }
 
     private <T> T chooseRandom(List<T> list) {
         Random random = new Random();
         int randomIndex = random.nextInt(list.size());
         return list.get(randomIndex);
-    }
-
-    private Wall determineWallToRemove(Cell cell, Cell neighbor) {
-        Integer yDiff = cell.row() - neighbor.row();
-        Integer xDiff = cell.column() - neighbor.column();
-
-        if (xDiff == -1) {
-            return Wall.RIGHT;
-        } else if (xDiff == 1) {
-            return Wall.LEFT;
-        } else if (yDiff == 1) {
-            return Wall.TOP;
-         } else {
-            return Wall.BOTTOM;
-        }
     }
 
     private enum Direction {
