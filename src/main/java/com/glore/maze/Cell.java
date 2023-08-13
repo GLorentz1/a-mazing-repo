@@ -67,6 +67,10 @@ public class Cell {
         walls.set(wall.ordinal(), false);
     }
 
+    public void addWall(Wall wall) {
+        walls.set(wall.ordinal(), true);
+    }
+
     public Boolean isTopRow() {
         return row == 0;
     }

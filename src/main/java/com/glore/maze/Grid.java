@@ -131,4 +131,26 @@ public class Grid {
             }
         }
     }
+
+    public void addWallAt(Integer row, Integer column, Wall wall) {
+        Cell cell = cellAt(row, column);
+        cell.addWall(wall);
+
+        if(wall.equals(Wall.BOTTOM)) {
+            Cell neighborCell = cellAt(row+1, column);
+            neighborCell.addWall(Wall.TOP);
+            
+        } else if(wall.equals(Wall.LEFT)) {
+            Cell neighborCell = cellAt(row, column-1);
+            neighborCell.addWall(Wall.RIGHT);
+            
+        } else if(wall.equals(Wall.RIGHT)) {
+            Cell neighborCell = cellAt(row, column+1);
+            neighborCell.addWall(Wall.LEFT);
+            
+        } else if(wall.equals(Wall.TOP)) {
+            Cell neighborCell = cellAt(row-1, column);
+            neighborCell.addWall(Wall.BOTTOM);
+        }
+    }
 }

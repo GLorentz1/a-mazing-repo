@@ -4,6 +4,7 @@ import com.glore.maze.controller.MenuController;
 import com.glore.maze.controller.PlayerMovementController;
 import com.glore.maze.generator.BacktrackingMazeGenerator;
 import com.glore.maze.generator.RandomizedKruskalGenerator;
+import com.glore.maze.generator.RecursiveDivisionGenerator;
 import com.glore.maze.generator.WilsonsMazeGenerator;
 import com.glore.maze.solver.BFSMazeSolver;
 import com.glore.maze.solver.DFSMazeSolver;
@@ -13,7 +14,7 @@ public class MazeMain {
     public static void main(String[] args) {
         Integer size = 50;
 
-        WilsonsMazeGenerator generator = new WilsonsMazeGenerator();        
+        RecursiveDivisionGenerator generator = new RecursiveDivisionGenerator();        
         PlayerMovementController controller = new PlayerMovementController(new Player());
         FloodMazeSolver solver = new FloodMazeSolver();
         MazeManager manager = 
@@ -23,7 +24,7 @@ public class MazeMain {
                                 .withGenerator(generator, size)
                                 .withSolver(solver)
                                 .withMazeGenerationVisualization(true)
-                                .withMazeSolutionGenerationVisualization(false)
+                                .withMazeSolutionGenerationVisualization(true)
                                 .build();
         
         manager.manage();
