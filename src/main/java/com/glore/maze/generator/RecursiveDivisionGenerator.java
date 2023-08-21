@@ -78,7 +78,7 @@ public class RecursiveDivisionGenerator implements MazeGenerator {
     private int createRandomVerticalLine(Grid maze, Chamber chamber) {
         int randomIndex = random.nextInt(chamber.getStartingColumn(), chamber.getEndingColumn());
 
-        int randomIndexToIgnore = random.nextInt(chamber.getStartingRow(), chamber.getEndingRow());
+        int randomIndexToIgnore = random.nextInt(chamber.getStartingRow(), chamber.getEndingRow()+1);
 
         for(Integer i = chamber.getStartingRow(); i <= chamber.getEndingRow(); i++) {
             if(i != randomIndexToIgnore) {
@@ -93,7 +93,7 @@ public class RecursiveDivisionGenerator implements MazeGenerator {
 
     private int createRandomHorizontalLine(Grid maze, Chamber chamber) {
         int randomIndex = random.nextInt(chamber.getStartingRow(), chamber.getEndingRow());
-        int randomIndexToIgnore = random.nextInt(chamber.getStartingColumn(), chamber.getEndingColumn());
+        int randomIndexToIgnore = random.nextInt(chamber.getStartingColumn(), chamber.getEndingColumn()+1);
 
 
         for(Integer i = chamber.getStartingColumn(); i <= chamber.getEndingColumn(); i++) {
